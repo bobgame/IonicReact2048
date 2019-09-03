@@ -1,5 +1,5 @@
 {
-  "name": "ionic-react-guessing",
+  "name": "ionic-react-2048",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.0",
+    "react-swipeable": "^5.4.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "tslint": "^5.19.0",

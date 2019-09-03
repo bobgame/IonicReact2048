@@ -1,79 +1,31 @@
-.number-result-box {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
-  align-content: space-between;
-  height: 15vh;
-  overflow: hidden;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 1.5vh;
+.play-content {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background: #ddd;
+  position: relative;
 
-  .result-item {
-    width: 32%;
-    height: 3vh;
+  .bg-empty {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f2f2f2;
-    border-radius: 3px;
-    color: #1890ff;
-    font-weight: bold;
-  }
-  .empty-item{
-    width: 32%;
-    height: 3vh;
-  }
-}
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+    padding: 2%;
 
-.number-show-box{
-  &:disabled{
-    width: 100%;
-    font-size: 3vh;
-    height: 6vh;
-    background: none !important;
-    color: #000 !important;
-    cursor: default !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .show-box-item{
-      width: 8%;
-      margin: 0 2%;
-      cursor: default;
+    .bg-empty-item {
+      float: left;
+      width: 22%;
+      height: 0;
+      padding-bottom: 22%;
+      margin: 1.5%;
+      background: #e7e7e7;
+
     }
   }
 }
 
-.number-input-box {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
-
-  Button,
-  >div {
-    width: 17%;
-    margin-bottom: 2vh;
-    height: 4vh;
-    font-size: 2vh;
-  }
-}
-
-.number-tool-box {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
-
-  Button {
-    width: 46%;
-  }
-}
-
-.info-box{
-  &.ant-list-grid .ant-list-item{
+.info-box {
+  &.ant-list-grid .ant-list-item {
     margin: 1vh 0;
     text-align: center;
   }
