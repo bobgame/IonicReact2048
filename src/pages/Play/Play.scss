@@ -19,7 +19,40 @@
       padding-bottom: 22%;
       margin: 1.5%;
       background: #e7e7e7;
+      border-radius: 4px;
 
+    }
+  }
+
+  .active-num {
+    position: absolute;
+    left: 2%;
+    top: 2%;
+    width: calc(22% * 0.96);
+    background: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 2em;
+    border-radius: 4px;
+    transition: all .3s;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      padding-bottom: 100%;
+      vertical-align: middle;
+    }
+
+    @for $i from 1 through 4 {
+      &.active-x-#{$i} {
+        left: calc((2 + 1.5 * 2 * (#{$i} - 1) + 22 * (#{$i} - 1) * 0.96 + 1.5) * 1%);
+      }
+    }
+
+    @for $j from 1 through 4 {
+      &.active-y-#{$j} {
+        top: calc((2 + 1.5 * 2 * (#{$j} - 1) + 22 * (#{$j} - 1) * 0.96 + 1.5) * 1%);
+      }
     }
   }
 }

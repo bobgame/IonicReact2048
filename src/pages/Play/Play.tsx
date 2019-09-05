@@ -10,19 +10,20 @@ import { Link } from 'react-router-dom'
 import { Button, List } from 'antd'
 
 import './Play.scss'
-import { actionClickGuess, actionClickNumber, actionDeleteNumber, actionResetList, actionCloseGameover, actionAddUseTime } from '../../store/action-creator'
+import { actionResetList, actionCloseGameover, actionAddUseTime, actionSlideToLeft, actionSlideToDown, actionSlideToUp, actionSlideToRight } from '../../store/action-creator'
 // import PlayResultBox from './ui/play-ui-result-box'
 // import PlayShowBox from './ui/play-ui-show-box'
 // import PlayNumberBox from './ui/play-ui-number-box'
 // import PlayButtonBox from './ui/play-ui-button-box'
 import GameoverModal from './ui/play-ui-gameover-modal'
+import { ActiveNumber } from '../../store/default-state'
 
 const PlayPage: React.FC = (props: any) => {
 
   useEffect(() => {
-    if (props.list.length === 0) {
-      props.resetLists()
-    }
+    // if (props.list.length === 0) {
+    //   props.resetLists()
+    // }
     const addUseTimeInterval = setInterval(() => {
       props.addUseTime()
     }, 1000)
@@ -34,7 +35,8 @@ const PlayPage: React.FC = (props: any) => {
   const {
     // inputValue, list,
     times, gameover, useTime,
-    // clickNumber, clickGuess, deleteNumber,
+    activeId, activeNumbers,
+    slideToLeft, slideToRight, slideToUp, slideToDown,
     closeGameOver
   } = props
 
@@ -49,7 +51,7 @@ const PlayPage: React.FC = (props: any) => {
       divs.push(i)
     }
     return divs.map(d => {
-      return <div className='bg-empty-item' key={'bg-empty-' + d}>{d}</div>
+      return <div className='bg-empty-item' key={'bg-empty-' + d} />
     })
   }
   const emptyBgDivs = createEmptyBgDivs()
@@ -57,6 +59,7 @@ const PlayPage: React.FC = (props: any) => {
   return (
     <>
       <h2 className='text-center'>2048</h2>
+      <div>{activeId}</div>
       <List
         grid={{ column: 2 }}
         itemLayout='vertical'
@@ -69,8 +72,20 @@ const PlayPage: React.FC = (props: any) => {
           </List.Item>
         )}
       />
-      <Swipeable className='play-content mbh-4' onSwipedLeft={(event) => console.log(event)}>
+      <Swipeable className='play-content mbh-4'
+        onSwipedLeft={() => slideToLeft()}
+        onSwipedRight={() => slideToRight()}
+        onSwipedUp={() => slideToUp()}
+        onSwipedDown={() => slideToDown()}
+      >
         <div className='bg-empty'>{emptyBgDivs}</div>
+        {
+          activeNumbers.map((num: ActiveNumber) => {
+            return (
+              <div key={'active-number-' + num.id} className={`active-num active-x-${num.pox} active-y-${num.poy}`}>{num.value}</div>
+            )
+          })
+        }
       </Swipeable>
       <Link to='/'><Button block>返回首页</Button></Link>
       <GameoverModal
@@ -85,7 +100,8 @@ const stateToProps = (state: any) => {
   return {
     inputValue: state.inputValue,
     gameover: state.gameover,
-    list: state.list,
+    activeId: state.activeId,
+    activeNumbers: state.activeNumbers,
     times: state.times,
     useTime: state.useTime,
   }
@@ -93,15 +109,19 @@ const stateToProps = (state: any) => {
 
 const dispatchToProps = (dispatch: any) => {
   return {
-    clickNumber(num: string) {
-      dispatch(actionClickNumber(num))
+    slideToLeft() {
+      dispatch(actionSlideToLeft())
     },
-    clickGuess() {
-      dispatch(actionClickGuess())
+    slideToRight() {
+      dispatch(actionSlideToRight())
     },
-    deleteNumber() {
-      dispatch(actionDeleteNumber())
+    slideToUp() {
+      dispatch(actionSlideToUp())
     },
+    slideToDown() {
+      dispatch(actionSlideToDown())
+    },
+
     resetLists() {
       dispatch(actionResetList())
     },

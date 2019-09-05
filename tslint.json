@@ -4,6 +4,7 @@
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "jsx-boolean-value": false,
+    "jsx-alignment": false,
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,

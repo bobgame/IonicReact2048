@@ -1,18 +1,22 @@
 import { PLAY_TYPES } from './action-type'
 // import Axios from 'axios'
 
-export const actionClickNumber = (value: any) => ({
-  type: PLAY_TYPES.CLICK_NUMBER,
-  value
+export const actionSlideToLeft = () => ({
+  type: PLAY_TYPES.SLIDE_TO_LEFT
 })
 
-export const actionClickGuess = () => ({
-  type: PLAY_TYPES.CLICK_GUESS
+export const actionSlideToRight = () => ({
+  type: PLAY_TYPES.SLIDE_TO_RIGHT
 })
 
-export const actionDeleteNumber = () => ({
-  type: PLAY_TYPES.DELETE_NUMBER
+export const actionSlideToUp = () => ({
+  type: PLAY_TYPES.SLIDE_TO_UP
 })
+
+export const actionSlideToDown = () => ({
+  type: PLAY_TYPES.SLIDE_TO_DOWN
+})
+
 
 export const actionResetList = () => ({
   type: PLAY_TYPES.RESET_GAME

@@ -1,34 +1,67 @@
 export const defalutState: DefaultState = {
-  inputValue: ['-', '-', '-', '-'],
-  times: 8,
+  times: 0,
   useTime: {
     mm: '00',
     ss: '00',
   },
-  rightNumber: '3629',
   gameover: {
     isOver: false,
     title: '',
     desc: '',
   },
-  list: [
-    // { numbers: '0842', result: '0A2B' },
-    // { numbers: '0843', result: '1A2B' },
-  ]
+  activeId: 3,
+  activeNumbers: [
+    {
+      id: 1,
+      poy: 1,
+      pox: 1,
+      value: 2,
+    },
+    {
+      id: 2,
+      poy: 2,
+      pox: 1,
+      value: 4,
+    },
+    {
+      id: 3,
+      poy: 3,
+      pox: 1,
+      value: 4,
+    },
+    {
+      id: 4,
+      poy: 1,
+      pox: 2,
+      value: 4,
+    },
+    {
+      id: 5,
+      poy: 2,
+      pox: 2,
+      value: 4,
+    },
+  ],
 }
 
 export interface DefaultState {
-  inputValue: string[]
   times: number
   useTime: {
     mm: string
     ss: string
   },
-  rightNumber: string
   gameover: {
     isOver: boolean
     title: string
     desc: string
   },
-  list: Array<{ numbers: string, result: string }>
+  activeId: number,
+  activeNumbers: ActiveNumber[],
+}
+
+export interface ActiveNumber {
+  id: number
+  pox: number
+  poy: number
+  value: number
 }
