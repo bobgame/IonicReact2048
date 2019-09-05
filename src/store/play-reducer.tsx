@@ -151,10 +151,80 @@ export const slideToDownReducer = (state: DefaultState) => {
   const notChange = checkIfChange(tempActiveNumbers, newState.activeNumbers)
   if (!notChange) {
     newState.times++
+    newState.activeNumbers.push(celAddNumber('down', newState.activeNumbers, newState.activeId))
+    newState.activeId++
     newState.activeNumbers.sort((a, b) => b.id - a.id)
   }
 
   return newState
+}
+
+function celAddNumber(arrow: string, active: ActiveNumber[], id: number) {
+  const addNumber: ActiveNumber = {
+    id: id,
+    poy: 2,
+    pox: 2,
+    value: 2,
+  }
+  switch (arrow) {
+    case 'left':
+      for (; ;) {
+        const x = getRandNum()
+        const y = getRandNum()
+        const activeInNum = active.find(a => a.pox === x - 1 && a.poy === y)
+        const activeEmpty = active.find(b => b.pox === x && b.poy === y)
+        if ((activeInNum || x === 0) && !activeEmpty) {
+          addNumber.pox = x
+          addNumber.poy = y
+          break
+        }
+      }
+      break
+    case 'right':
+      for (; ;) {
+        const x = getRandNum()
+        const y = getRandNum()
+        const activeInNum = active.find(a => a.pox === x + 1 && a.poy === y)
+        const activeEmpty = active.find(b => b.pox === x && b.poy === y)
+        if ((activeInNum || x === 4) && !activeEmpty) {
+          addNumber.pox = x
+          addNumber.poy = y
+          break
+        }
+      }
+      break
+    case 'up':
+      for (; ;) {
+        const x = getRandNum()
+        const y = getRandNum()
+        const activeInNum = active.find(a => a.pox === x && a.poy === y - 1)
+        const activeEmpty = active.find(b => b.pox === x && b.poy === y)
+        if ((activeInNum || y === 0) && !activeEmpty) {
+          addNumber.pox = x
+          addNumber.poy = y
+          break
+        }
+      }
+      break
+    case 'down':
+      for (; ;) {
+        const x = getRandNum()
+        const y = getRandNum()
+        const activeInNum = active.find(a => a.pox === x && a.poy === y + 1)
+        const activeEmpty = active.find(b => b.pox === x && b.poy === y)
+        if ((activeInNum || y === 4) && !activeEmpty) {
+          addNumber.pox = x
+          addNumber.poy = y
+          break
+        }
+      }
+      break
+  }
+  return addNumber
+}
+
+function getRandNum(): number {
+  return Math.floor(Math.random() * 4 + 1)
 }
 
 function checkIfChange(oldObj: ActiveNumber[], newObj: ActiveNumber[]): boolean {

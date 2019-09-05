@@ -34,6 +34,7 @@
     vertical-align: middle;
     font-size: 2em;
     border-radius: 4px;
+    animation: showNumberCard .5s ease-out 1;
     transition: all .3s;
 
     &:before {
@@ -61,5 +62,19 @@
   &.ant-list-grid .ant-list-item {
     margin: 1vh 0;
     text-align: center;
+  }
+}
+
+@keyframes showNumberCard {
+
+  0%,
+  30% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
