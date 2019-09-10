@@ -27,8 +27,12 @@ const PlayPage: React.FC = (props: any) => {
     const addUseTimeInterval = setInterval(() => {
       props.addUseTime()
     }, 1000)
+
+    document.addEventListener('keydown', onKeyDown)
+
     return function cleanup() {
       clearInterval(addUseTimeInterval)
+      document.removeEventListener('keydown', onKeyDown)
     }
   })
 
@@ -44,6 +48,23 @@ const PlayPage: React.FC = (props: any) => {
     `剩余次数: ${times}`,
     `时间: ${useTime.mm}:${useTime.ss}`,
   ]
+
+  function onKeyDown(e: any) {
+    switch (e.keyCode) {
+      case 37: // 左
+        slideToLeft()
+        break
+      case 38: // 上
+        slideToUp()
+        break
+      case 39: // 右
+        slideToRight()
+        break
+      case 40: // 下
+        slideToDown()
+        break
+    }
+  }
 
   const createEmptyBgDivs = () => {
     const divs = []
@@ -82,7 +103,7 @@ const PlayPage: React.FC = (props: any) => {
         {
           activeNumbers.map((num: ActiveNumber) => {
             return (
-              <div key={'active-number-' + num.id} className={`active-num active-x-${num.pox} active-y-${num.poy}`}>{num.value}</div>
+              <div key={'active-number-' + num.id} className={`active-num active-x-${num.pox} active-y-${num.poy}`}><div className='active-num-item'>{num.value}</div></div>
             )
           })
         }

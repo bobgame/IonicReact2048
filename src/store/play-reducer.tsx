@@ -35,9 +35,14 @@ export const clickGuessReducer = (state: DefaultState) => {
 }
 
 export const slideToLeftReducer = (state: DefaultState) => {
-  const newState = deepCopyState(state)
+  let newState = deepCopyState(state)
+  newState = checkIfGameOver(newState)
+  if (newState.gameover.isOver) { return newState }
   const tempActiveNumbers: ActiveNumber[] = deepCopy(newState.activeNumbers)
   newState.activeNumbers.sort((a, b) => {
+    if (b.pox === a.pox) {
+      return a.poy - b.poy
+    }
     return a.pox - b.pox
   })
   newState.activeNumbers.forEach(an => {
@@ -60,15 +65,23 @@ export const slideToLeftReducer = (state: DefaultState) => {
   const notChange = checkIfChange(tempActiveNumbers, newState.activeNumbers)
   if (!notChange) {
     newState.times++
+    if (newState.activeNumbers.length < 16) {
+      newState.activeNumbers.push(celAddNumber('left', newState.activeNumbers, newState.activeId))
+      newState.activeId++
+    }
     newState.activeNumbers.sort((a, b) => b.id - a.id)
   }
-
   return newState
 }
 export const slideToRightReducer = (state: DefaultState) => {
-  const newState = deepCopyState(state)
+  let newState = deepCopyState(state)
+  newState = checkIfGameOver(newState)
+  if (newState.gameover.isOver) { return newState }
   const tempActiveNumbers: ActiveNumber[] = deepCopy(newState.activeNumbers)
   newState.activeNumbers.sort((a, b) => {
+    if (b.pox === a.pox) {
+      return b.poy - a.poy
+    }
     return b.pox - a.pox
   })
   newState.activeNumbers.forEach(an => {
@@ -91,14 +104,23 @@ export const slideToRightReducer = (state: DefaultState) => {
   const notChange = checkIfChange(tempActiveNumbers, newState.activeNumbers)
   if (!notChange) {
     newState.times++
+    if (newState.activeNumbers.length < 16) {
+      newState.activeNumbers.push(celAddNumber('right', newState.activeNumbers, newState.activeId))
+      newState.activeId++
+    }
     newState.activeNumbers.sort((a, b) => b.id - a.id)
   }
   return newState
 }
 export const slideToUpReducer = (state: DefaultState) => {
-  const newState = deepCopyState(state)
+  let newState = deepCopyState(state)
+  newState = checkIfGameOver(newState)
+  if (newState.gameover.isOver) { return newState }
   const tempActiveNumbers: ActiveNumber[] = deepCopy(newState.activeNumbers)
   newState.activeNumbers.sort((a, b) => {
+    if (b.poy === a.poy) {
+      return a.pox - b.pox
+    }
     return a.poy - b.poy
   })
   newState.activeNumbers.forEach(an => {
@@ -121,14 +143,23 @@ export const slideToUpReducer = (state: DefaultState) => {
   const notChange = checkIfChange(tempActiveNumbers, newState.activeNumbers)
   if (!notChange) {
     newState.times++
+    if (newState.activeNumbers.length < 16) {
+      newState.activeNumbers.push(celAddNumber('up', newState.activeNumbers, newState.activeId))
+      newState.activeId++
+    }
     newState.activeNumbers.sort((a, b) => b.id - a.id)
   }
   return newState
 }
 export const slideToDownReducer = (state: DefaultState) => {
-  const newState = deepCopyState(state)
+  let newState = deepCopyState(state)
+  newState = checkIfGameOver(newState)
+  if (newState.gameover.isOver) { return newState }
   const tempActiveNumbers: ActiveNumber[] = deepCopy(newState.activeNumbers)
   newState.activeNumbers.sort((a, b) => {
+    if (b.poy === a.poy) {
+      return b.pox - a.pox
+    }
     return b.poy - a.poy
   })
   newState.activeNumbers.forEach(an => {
@@ -151,11 +182,12 @@ export const slideToDownReducer = (state: DefaultState) => {
   const notChange = checkIfChange(tempActiveNumbers, newState.activeNumbers)
   if (!notChange) {
     newState.times++
-    newState.activeNumbers.push(celAddNumber('down', newState.activeNumbers, newState.activeId))
-    newState.activeId++
+    if (newState.activeNumbers.length < 16) {
+      newState.activeNumbers.push(celAddNumber('down', newState.activeNumbers, newState.activeId))
+      newState.activeId++
+    }
     newState.activeNumbers.sort((a, b) => b.id - a.id)
   }
-
   return newState
 }
 
@@ -168,7 +200,7 @@ function celAddNumber(arrow: string, active: ActiveNumber[], id: number) {
   }
   switch (arrow) {
     case 'left':
-      for (; ;) {
+      for (let i = 0; i < 99999; i++) {
         const x = getRandNum()
         const y = getRandNum()
         const activeInNum = active.find(a => a.pox === x - 1 && a.poy === y)
@@ -181,7 +213,7 @@ function celAddNumber(arrow: string, active: ActiveNumber[], id: number) {
       }
       break
     case 'right':
-      for (; ;) {
+      for (let i = 0; i < 99999; i++) {
         const x = getRandNum()
         const y = getRandNum()
         const activeInNum = active.find(a => a.pox === x + 1 && a.poy === y)
@@ -194,7 +226,7 @@ function celAddNumber(arrow: string, active: ActiveNumber[], id: number) {
       }
       break
     case 'up':
-      for (; ;) {
+      for (let i = 0; i < 99999; i++) {
         const x = getRandNum()
         const y = getRandNum()
         const activeInNum = active.find(a => a.pox === x && a.poy === y - 1)
@@ -207,7 +239,7 @@ function celAddNumber(arrow: string, active: ActiveNumber[], id: number) {
       }
       break
     case 'down':
-      for (; ;) {
+      for (let i = 0; i < 99999; i++) {
         const x = getRandNum()
         const y = getRandNum()
         const activeInNum = active.find(a => a.pox === x && a.poy === y + 1)
@@ -246,6 +278,32 @@ function checkIfChange(oldObj: ActiveNumber[], newObj: ActiveNumber[]): boolean 
     notChange = false
   }
   return notChange
+}
+function checkIfGameOver(newState: DefaultState): DefaultState {
+  const state = deepCopyState(newState)
+  const activeNumbers = state.activeNumbers
+  let isGameOver = true
+  if (activeNumbers.length >= 16) {
+    for (let i = 0, len = activeNumbers.length; i < len; i++) {
+      const a = activeNumbers[i]
+      const leftItem = activeNumbers.find(left => left.pox === a.pox - 1 && left.poy === a.poy)
+      if (leftItem && leftItem.value > 0 && leftItem.value === a.value) { isGameOver = false; break }
+      const bottomItem = activeNumbers.find(bottom => bottom.poy === a.poy + 1 && bottom.pox === a.pox)
+      if (bottomItem && bottomItem.value > 0 && bottomItem.value === a.value) { isGameOver = false; break }
+    }
+  } else {
+    isGameOver = false
+  }
+  if (isGameOver) {
+    const timeout = setTimeout(() => {
+      state.gameover.isOver = true
+      state.gameover.title = '游戏结束'
+      state.gameover.desc = '游戏结束'
+      clearTimeout(timeout)
+      return state
+    }, 0)
+  }
+  return state
 }
 
 function deleteEmptyNumbers(numbers: ActiveNumber[]): ActiveNumber[] {
