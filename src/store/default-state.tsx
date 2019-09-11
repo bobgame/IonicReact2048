@@ -59,6 +59,12 @@ export const defalutState: DefaultState = {
       pox: 3,
       value: 32,
     },
+    {
+      id: 9,
+      poy: 1,
+      pox: 4,
+      value: 32768,
+    },
   ],
 }
 

@@ -10,7 +10,7 @@ const GameoverModal = (props: any) => {
       onCancel={props.closeGameOver}
     >
       <h2 className='text-center'>{props.gameover.title}</h2>
-      <p className='text-center'>{props.gameover.desc}</p>
+      <p className='text-center' dangerouslySetInnerHTML={{ __html: props.gameover.desc }} />
     </Modal>
   )
 }

@@ -45,7 +45,7 @@ const PlayPage: React.FC = (props: any) => {
   } = props
 
   const data = [
-    `剩余次数: ${times}`,
+    `步数: ${times}`,
     `时间: ${useTime.mm}:${useTime.ss}`,
   ]
 
@@ -103,7 +103,7 @@ const PlayPage: React.FC = (props: any) => {
         {
           activeNumbers.map((num: ActiveNumber) => {
             return (
-              <div key={'active-number-' + num.id} className={`active-num active-x-${num.pox} active-y-${num.poy}`}><div className='active-num-item'>{num.value}</div></div>
+              <div key={'active-number-' + num.id} className={`active-num active-num-${num.value} active-x-${num.pox} active-y-${num.poy}`}><div className='active-num-item'>{num.value}</div></div>
             )
           })
         }

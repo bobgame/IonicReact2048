@@ -2,8 +2,9 @@
   width: 100%;
   height: 0;
   padding-bottom: 100%;
-  background: #ddd;
+  background: #aaa;
   position: relative;
+  border-radius: 2px;
 
   .bg-empty {
     display: flex;
@@ -18,7 +19,7 @@
       height: 0;
       padding-bottom: 22%;
       margin: 1.5%;
-      background: #e7e7e7;
+      background: rgba(231, 231, 231, 0.164);
       border-radius: 4px;
 
     }
@@ -58,6 +59,71 @@
     @for $j from 1 through 4 {
       &.active-y-#{$j} {
         top: calc((2 + 1.5 * 2 * (#{$j} - 1) + 22 * (#{$j} - 1) * 0.96 + 1.5) * 1%);
+      }
+    }
+
+    &.active-num-2,
+    &.active-num-512,
+    &.active-num-65536 {
+      background: #d2f0f0;
+      color: #135353;
+    }
+
+    &.active-num-4,
+    &.active-num-1024 {
+      background: #d4e6d4;
+      color: #1b491b;
+    }
+
+    &.active-num-8,
+    &.active-num-2048 {
+      background: #bbe0e0;
+      color: #246b6b;
+    }
+
+    &.active-num-16 {
+      background: #dbd07d;
+      color: #6e6521;
+    }
+
+    &.active-num-32,
+    &.active-num-4096 {
+      background: #e0e0bc;
+      color: #61611b;
+    }
+
+    &.active-num-64,
+    &.active-num-8192 {
+      background: #d1c876;
+      color: #665f22;
+    }
+
+    &.active-num-128,
+    &.active-num-16384 {
+      background: #e9df73;
+      color: #6b651e;
+    }
+
+    &.active-num-256,
+    &.active-num-32768 {
+      background: #f0fff0;
+      color: #326d32;
+    }
+
+    &.active-num-1024,
+    &.active-num-2048,
+    &.active-num-4096,
+    &.active-num-8192 {
+      .active-num-item {
+        font-size: 1.5em;
+      }
+    }
+
+    &.active-num-16384,
+    &.active-num-32768,
+    &.active-num-65536 {
+      .active-num-item {
+        font-size: 1.2em;
       }
     }
   }

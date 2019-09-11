@@ -295,13 +295,16 @@ function checkIfGameOver(newState: DefaultState): DefaultState {
     isGameOver = false
   }
   if (isGameOver) {
-    const timeout = setTimeout(() => {
-      state.gameover.isOver = true
-      state.gameover.title = '游戏结束'
-      state.gameover.desc = '游戏结束'
-      clearTimeout(timeout)
-      return state
-    }, 0)
+    state.gameover.isOver = true
+    state.gameover.title = '游戏结束'
+    let maxValue = 2
+    newState.activeNumbers.forEach(anb => {
+      if (anb.value > maxValue) {
+        maxValue = anb.value
+      }
+    })
+    state.gameover.desc = `您一共动了<b>${newState.times}</b>次，最大值为<b>${maxValue}</b>`
+    return state
   }
   return state
 }
